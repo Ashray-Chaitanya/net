@@ -1,0 +1,8 @@
+requests
+numpy
+opencv-python-headless
+pytesseract
+Pillow
+selenium
+beautifulsoup4
+pymongo
