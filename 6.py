@@ -1,51 +1,25 @@
+import seaborn as sns
 import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
 
-def kernel(point, xmat, k):
-    m, n = np.shape(xmat)
-    weights = np.mat(np.eye(m))  # identity matrix
-    for j in range(m):
-        diff = point - xmat[j]
-        weights[j, j] = np.exp(diff * diff.T / (-2.0 * k ** 2))
-    return weights
 
-def localWeight(point, xmat, ymat, k):
-    wei = kernel(point, xmat, k)
-    W = (xmat.T * (wei * xmat)).I * (xmat.T * (wei * ymat.T))
-    return W
+sns.set_style('white')  # or use 'whitegrid' for gridlines
+plt.style.use('default')  # ensures no extra background tint
 
-def localWeightRegression(xmat, ymat, k):
-    m, n = np.shape(xmat)
-    ypred = np.zeros(m)
-    for i in range(m):
-        ypred[i] = xmat[i] * localWeight(xmat[i], xmat, ymat, k)
-    return ypred
+# Load dataset
+tips = sns.load_dataset('tips')
 
-def graphPlot(X, ypred):
-    sortindex = X[:, 1].argsort(0)  # index of the smallest
-    xsort = X[sortindex][:, 0]
-    fig = plt.figure()
-    ax = fig.add_subplot(1, 1, 1)
-    ax.scatter(bill, tip, color='green')
-    ax.plot(X[sortindex][:, 1], ypred[sortindex], color='red', linewidth=5)
-    plt.xlabel('Total bill')
-    plt.ylabel('Tip')
-    plt.show()
+# Plot with polynomial regression of order 3
+sns.regplot(
+    x='total_bill',
+    y='tip',
+    data=tips,
+    order=3,
+    scatter_kws={'color': 'green', 's': 30},  # s increases dot size
+    line_kws={'color': 'red', 'linewidth': 3}
+)
 
-# Load data points
-data = pd.read_csv('Program6_dataset_tips.csv')
-bill = np.array(data.total_bill)  # We use only Bill amount and Tips data
-tip = np.array(data.tip)
-
-mbill = np.mat(bill)
-mtip = np.mat(tip)
-m = np.shape(mbill)[1]
-one = np.mat(np.ones(m))
-X = np.hstack((one.T, mbill.T))  # 244 rows, 2 cols
-
-# Perform locally weighted linear regression
-ypred = localWeightRegression(X, mtip, 9)
-
-# Plot results
-graphPlot(X, ypred)
+plt.title('Regression with parameter k = 3')
+plt.xlabel('Total Bill')
+plt.ylabel('Tip')
+plt.tight_layout()
+plt.show()
