@@ -1,71 +1,49 @@
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.datasets import load_breast_cancer
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
-from sklearn.metrics import confusion_matrix, classification_report
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-# Load the dataset
-data = load_breast_cancer()
-X = data.data
-y = data.target
+// Launch browser and open a test page
+WebUI.openBrowser('https://www.w3schools.com')
 
-# Standardize the features
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+// Textbox
+WebUI.navigateToUrl('https://www.w3schools.com/html/html_forms.asp')
+WebUI.setText(findTestObject('Page/input_firstname'), 'Test')
 
-# Apply KMeans clustering
-kmeans = KMeans(n_clusters=2, random_state=42)
-y_kmeans = kmeans.fit_predict(X_scaled)
+// Checkbox
+WebUI.navigateToUrl('https://www.w3schools.com/howto/howto_custom_checkbox.asp')
+WebUI.click(findTestObject('Page/checkbox_1'))
 
-# Evaluate the clustering
-print("Confusion Matrix:")
-print(confusion_matrix(y, y_kmeans))
+// Combo box
+WebUI.navigateToUrl('https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select')
+WebUI.switchToFrame(findTestObject('Page/frame_iframeResult'), 5)
+WebUI.selectOptionByValue(findTestObject('Page/select_cars'), 'volvo', false)
 
-print("\nClassification Report:")
-print(classification_report(y, y_kmeans))
+// File upload
+WebUI.navigateToUrl('https://demo.guru99.com/test/upload/')
+WebUI.uploadFile(findTestObject('Page/input_upload'), 'C:\\path\\to\\file.txt')
 
-# Perform PCA for 2D visualization
-pca = PCA(n_components=2)
-X_pca = pca.fit_transform(X_scaled)
+// Alert
+WebUI.navigateToUrl('https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_alert')
+WebUI.switchToFrame(findTestObject('Page/frame_iframeResult'), 5)
+WebUI.click(findTestObject('Page/button_alert'))
+WebUI.acceptAlert()
 
-# Create a DataFrame for visualization
-df = pd.DataFrame(X_pca, columns=['PC1', 'PC2'])
-df['Cluster'] = y_kmeans
-df['True Label'] = y
+// Scroll
+WebUI.executeJavaScript("window.scrollTo(0, document.body.scrollHeight)", null)
+WebUI.executeJavaScript("window.scrollTo(0, 0)", null)
 
-# Plot KMeans clustering
-plt.figure(figsize=(8, 6))
-sns.scatterplot(data=df, x='PC1', y='PC2', hue='Cluster',
-                palette='Set1', s=100, edgecolor='black', alpha=0.7)
-plt.title('K-Means Clustering of Breast Cancer Dataset')
-plt.xlabel('Principal Component 1')
-plt.ylabel('Principal Component 2')
-plt.legend(title="Cluster")
-plt.show()
+// Screenshot
+WebUI.takeScreenshot()
 
-# Plot true labels
-plt.figure(figsize=(8, 6))
-sns.scatterplot(data=df, x='PC1', y='PC2', hue='True Label',
-                palette='coolwarm', s=100, edgecolor='black', alpha=0.7)
-plt.title('True Labels of Breast Cancer Dataset')
-plt.xlabel('Principal Component 1')
-plt.ylabel('Principal Component 2')
-plt.legend(title="True Label")
-plt.show()
+// Mouse hover
+WebUI.navigateToUrl('https://www.w3schools.com/css/css_dropdowns.asp')
+WebUI.mouseOver(findTestObject('Page/button_dropdown'))
 
-# Plot clustering with centroids
-plt.figure(figsize=(8, 6))
-sns.scatterplot(data=df, x='PC1', y='PC2', hue='Cluster',
-                palette='Set1', s=100, edgecolor='black', alpha=0.7)
-centers = pca.transform(kmeans.cluster_centers_)
-plt.scatter(centers[:, 0], centers[:, 1], s=200, c='red',
-            marker='X', label='Centroids')
-plt.title('K-Means Clustering with Centroids')
-plt.xlabel('Principal Component 1')
-plt.ylabel('Principal Component 2')
-plt.legend(title="Cluster")
-plt.show()
+// Drag and drop
+WebUI.navigateToUrl('https://www.w3schools.com/html/html5_draganddrop.asp')
+WebUI.dragAndDropToObject(findTestObject('Page/drag_source'), findTestObject('Page/drag_target'))
+
+// Keystrokes (Google Search)
+WebUI.navigateToUrl('https://www.google.com')
+WebUI.setText(findTestObject('Page/input_search'), 'Katalon')
+WebUI.sendKeys(findTestObject('Page/input_search'), Keys.chord(Keys.ENTER))
+
+WebUI.closeBrowser()
