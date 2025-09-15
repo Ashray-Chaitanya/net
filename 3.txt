@@ -33,3 +33,4 @@ int main() {
   }
     return 0;
 }
+//gcc -fopenmp p1.c
