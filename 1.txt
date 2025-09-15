@@ -69,3 +69,5 @@ end = omp_get_wtime();
 printf("Parallel Merge Sort Time: %.6f seconds\n", end - start);free(a1);free(a2);
 return 0;
 }
+
+//gcc -fopenmp your_file_name.c -o your_file_name
