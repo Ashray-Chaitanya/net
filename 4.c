@@ -47,3 +47,4 @@ int main() {
     free(prime_flags);
     return 0;
 }
+//gcc -fopenmp p4.c -lm
