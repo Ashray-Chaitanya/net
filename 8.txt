@@ -1,22 +1,109 @@
-package Prog8;
-import org.testng.annotations.Test;
-import org.testng.Assert;
-public class testNGFramework {
-@Test(priority=1)
-void openBrowser(){
-System.out.println("Open browser");
+
+#include
+<stdio.h>
+#include
+<omp.h>
+// Recursive
+Fibonacci with OpenMP Tasks
+
+int fib_task(int
+n) {
+    int x, y;
+    if (n < 2)
+        return n;
+
+    #pragma omp task shared(x)
+    x = fib_task(n - 1);
+    #pragma omp task shared(y)
+    y = fib_task(n - 2);
+    #pragma omp taskwai
+    return x + y;
+
+
 }
-@Test(priority=2)
-void login(){
-System.out.println("Login");
+
+
+
+
+int main() {
+
+
+
+    int n;
+
+
+
+    printf("Enter the number of Fibonacci
+terms: ");
+
+
+
+    scanf("%d", &n);
+
+
+
+ 
+
+
+
+    printf("Fibonacci series:\n");
+
+
+
+ 
+
+
+
+    #pragma omp parallel
+
+
+
+    {
+
+
+
+        #pragma omp single
+
+
+
+        {
+
+
+
+            for (int i = 0; i < n; i++) {
+
+
+
+                int result = fib_task(i);
+
+
+
+                printf("fib(%d) =
+%d\n", i, result);
+
+
+
+            }
+
+
+
+        }
+
+
+
+    }
+
+
+
+ 
+
+
+
+    return 0;
+
+
+
 }
-@Test(priority=3)
-void addItem(){
-System.out.println("Add item to cart");
-Assert.assertEquals(5,10,"Item count mismatch");
-}
-@Test(priority=4)
-void close(){
-System.out.println("Close browser");
-}
-} 
+
+
+
