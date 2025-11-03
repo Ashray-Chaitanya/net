@@ -37,3 +37,8 @@ int main(int argc, char** argv) {
     MPI_Finalize();
     return 0;
 }
+Now For Compilation
+mpicc sg.c -o sg 
+For execution
+mpirun –oversubscribe --np 4 ./sg 
+
