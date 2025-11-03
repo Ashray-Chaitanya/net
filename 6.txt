@@ -23,3 +23,7 @@ int main(int argc, char** argv) {
     MPI_Finalize();
     return 0;
 }
+Now For Compilation
+mpicc deadlock.c -o deadlock 
+For execution
+mpirun --np 2 ./deadlock
