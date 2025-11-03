@@ -20,3 +20,7 @@ int main(int argc, char** argv) {
     MPI_Finalize();
     return 0;
 }
+Now For Compilation
+mpicc broadcast.c -o broadcast 
+For execution
+mpirun –oversubscribe --np 4 ./broadcast
